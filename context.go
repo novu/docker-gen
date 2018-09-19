@@ -98,6 +98,7 @@ type RuntimeContainer struct {
 	IP6Global    string
 	Mounts       []Mount
 	State        State
+	MergedDir    string
 }
 
 func (r *RuntimeContainer) Equals(o RuntimeContainer) bool {

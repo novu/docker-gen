@@ -388,6 +388,7 @@ func (g *generator) getContainers() ([]*RuntimeContainer, error) {
 			IP:           container.NetworkSettings.IPAddress,
 			IP6LinkLocal: container.NetworkSettings.LinkLocalIPv6Address,
 			IP6Global:    container.NetworkSettings.GlobalIPv6Address,
+			MergedDir:    container.GraphDriver.Data["MergedDir"],
 		}
 		for k, v := range container.NetworkSettings.Ports {
 			address := Address{
