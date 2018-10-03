@@ -1,12 +1,9 @@
-FROM alpine:latest
-LABEL maintainer="Jason Wilder <mail@jasonwilder.com>"
-
-RUN apk -U add openssl
-
-ENV VERSION 0.7.3
-ENV DOWNLOAD_URL https://github.com/jwilder/docker-gen/releases/download/$VERSION/docker-gen-alpine-linux-amd64-$VERSION.tar.gz
-ENV DOCKER_HOST unix:///tmp/docker.sock
-
-RUN wget -qO- $DOWNLOAD_URL | tar xvz -C /usr/local/bin
-
-ENTRYPOINT ["/usr/local/bin/docker-gen"]
+FROM golang:latest as builder
+RUN go get github.com/robfig/glock
+COPY GLOCKFILE ./
+RUN glock sync -n < GLOCKFILE
+COPY . ./
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-X main.buildVersion=novu"  -o docker-gen ./cmd/docker-gen
+FROM scratch
+COPY --from=builder /go/docker-gen ./docker-gen
+ENTRYPOINT ["./docker-gen"]
