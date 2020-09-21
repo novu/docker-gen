@@ -20,6 +20,7 @@ var (
 	version                 bool
 	watch                   bool
 	wait                    string
+	validate                bool
 	notifyCmd               string
 	notifyOutput            bool
 	notifySigHUPContainerID string
@@ -89,6 +90,7 @@ func initFlags() {
 	flag.BoolVar(&watch, "watch", false, "watch for container changes")
 	flag.StringVar(&wait, "wait", "", "minimum and maximum durations to wait (e.g. \"500ms:2s\") before triggering generate")
 	flag.BoolVar(&onlyExposed, "only-exposed", false, "only include containers with exposed ports")
+	flag.BoolVar(&validate, "validate", os.Getenv("DOCKER_VALIDATE") != "", "verify config file(s)")
 
 	flag.BoolVar(&onlyPublished, "only-published", false,
 		"only include containers with published ports (implies -only-exposed)")
@@ -129,6 +131,10 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error loading config %s: %s\n", configFile, err)
 			}
+		}
+		if validate == true {
+			log.Print("Config file(s) parsed successfully")
+			os.Exit(0)
 		}
 	} else {
 		w, err := dockergen.ParseWait(wait)

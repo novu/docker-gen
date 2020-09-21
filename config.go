@@ -13,6 +13,7 @@ type Config struct {
 	Dest             string
 	Watch            bool
 	Wait             *Wait
+	Validate         bool
 	NotifyCmd        string
 	NotifyOutput     bool
 	NotifyContainers map[string]docker.Signal
