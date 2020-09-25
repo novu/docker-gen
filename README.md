@@ -84,48 +84,53 @@ Generate files from docker container meta-data
 
 Options:
   -config value
-      config files with template directives. Config files will be merged if this option is specified multiple times. (default [])
+        config files with template directives. Config files will be merged if this option is specified multiple times.
   -endpoint string
-      docker api endpoint (tcp|unix://..). Default unix:///var/run/docker.sock
-  -interval int
-      notify command interval (secs)
-  -keep-blank-lines
-      keep blank lines in the output file
-  -notify restart xyz
-      run command after template is regenerated (e.g restart xyz)
-  -notify-output
-      log the output(stdout/stderr) of notify command
-  -notify-sighup container-ID
-      send HUP signal to container.  Equivalent to 'docker kill -s HUP container-ID'
-  -only-exposed
-      only include containers with exposed ports
-  -only-published
-      only include containers with published ports (implies -only-exposed)
+        docker api endpoint (tcp|unix://..). Default unix:///var/run/docker.sock
   -include-stopped
-      include stopped containers
+        include stopped containers
+  -interval int
+        notify command interval (secs)
+  -keep-blank-lines
+        keep blank lines in the output file
+  -notify restart xyz
+        run command after template is regenerated (e.g restart xyz)
+  -notify-output
+        log the output(stdout/stderr) of notify command
+  -notify-sighup container-ID
+        send HUP signal to container.  Equivalent to docker kill -s HUP container-ID
+  -only-exposed
+        only include containers with exposed ports
+  -only-published
+        only include containers with published ports (implies -only-exposed)
   -tlscacert string
-      path to TLS CA certificate file (default "/Users/jason/.docker/machine/machines/default/ca.pem")
+        path to TLS CA certificate file (default "/Users/john.knutson/.docker/ca.pem")
   -tlscert string
-      path to TLS client certificate file (default "/Users/jason/.docker/machine/machines/default/cert.pem")
+        path to TLS client certificate file (default "/Users/john.knutson/.docker/cert.pem")
   -tlskey string
-      path to TLS client key file (default "/Users/jason/.docker/machine/machines/default/key.pem")
+        path to TLS client key file (default "/Users/john.knutson/.docker/key.pem")
   -tlsverify
-      verify docker daemon's TLS certicate (default true)
+        verify docker daemon's TLS certicate
+  -validate
+        verify config file(s)
   -version
-      show version
+        show version
+  -wait string
+        minimum and maximum durations to wait (e.g. "500ms:2s") before triggering generate
   -watch
-      watch for container changes
-  -wait
-      minimum (and/or maximum) duration to wait after each container change before triggering
+        watch for container changes
 
 Arguments:
   template - path to a template to generate
-  dest - path to a write the template. If not specfied, STDOUT is used
+  dest - path to a write the template.  If not specfied, STDOUT is used
 
 Environment Variables:
   DOCKER_HOST - default value for -endpoint
-  DOCKER_CERT_PATH - directory path containing key.pem, cert.pm and ca.pem
-  DOCKER_TLS_VERIFY - enable client TLS verification]
+  DOCKER_CERT_PATH - directory path containing key.pem, cert.pem and ca.pem
+  DOCKER_TLS_VERIFY - enable client TLS verification
+  DOCKER_VALIDATE - validate config file(s)
+
+For more information, see https://github.com/jwilder/docker-gen
 ```
 
 If no `<dest>` file is specified, the output is sent to stdout. Mainly useful for debugging.
