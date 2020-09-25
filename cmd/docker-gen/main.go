@@ -90,7 +90,7 @@ func initFlags() {
 	flag.BoolVar(&watch, "watch", false, "watch for container changes")
 	flag.StringVar(&wait, "wait", "", "minimum and maximum durations to wait (e.g. \"500ms:2s\") before triggering generate")
 	flag.BoolVar(&onlyExposed, "only-exposed", false, "only include containers with exposed ports")
-	flag.BoolVar(&validate, "validate", os.Getenv("DOCKER_VALIDATE") != "", "verify config file(s)")
+	flag.BoolVar(&validate, "validate", os.Getenv("DOCKER_VALIDATE") != "", "validate config file(s)")
 
 	flag.BoolVar(&onlyPublished, "only-published", false,
 		"only include containers with published ports (implies -only-exposed)")
